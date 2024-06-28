@@ -3,6 +3,9 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+
+import static com.codeborne.selenide.Condition.appear;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
@@ -17,7 +20,7 @@ public class PracticeFormTest {
 
     @AfterAll
     static void afterAll() {
-        sleep(50000);
+        sleep(5);
     }
 
     @Test
@@ -31,31 +34,29 @@ public class PracticeFormTest {
         $("#dateOfBirthInput").click();
         $(".react-datepicker__month-select").$(byText("March")).click();
         $(".react-datepicker__year-select").$(byText("1980")).click();
-        $(".react-datepicker__month-container").$(byText("1")).click();
-        $("#subjectsInput").setValue("H").pressEnter();
-        $("#hobbies-checkbox-1").click();
-        $("#uploadPicture").uploadFromClasspath("src/test/resources/pictures/3.jpg");
-        $("#currentAddresscheckbox-1").setValue("Gorod");
-        $("#react-select-3-input-1").setValue("N").pressEnter();
-        $("#react-select-4-input").setValue("N").pressEnter();
+        $(".react-datepicker__day--001:not(.react-datepicker__day--outside-month)").click();
+        $("#subjectsInput").setValue("Hindi").pressEnter();
+//        $("#hobbies-checkbox-1").click();
+        $("#uploadPicture").uploadFromClasspath("pictures/1.png");
+//        $("#uploadPicture").uploadFile(new File("src/test/resources/pictures/1.png"));
+        $("#currentAddress").setValue("Gorod");
+        $("#state").click();
+        $("#stateCity-wrapper").$(byText("NCR")).click();
+        $("#city").click();
+        $("#stateCity-wrapper").$(byText("Delhi")).click();
+//        $("#react-select-4-input").setValue("N").pressEnter();
         $("#submit").click();
-
-
-
-
-
-
-//        $(".react-datepicker__month-select").selectOption("January");
-//        $(byText("January")).click();
-//        $(byText("1999")).click();
-//        $(".subjects-auto-complete__value-container").setValue("H");
-//        $("#react-select-2-option-0").click();
-
-
-
-        //$(".react-datepicker__day.").click();
-        //$(byText("1")).click();
-
-
+        $(".modal-dialog").should(appear);
+        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
+        $(".table-responsive").shouldHave(text("Mark"), text("Versal"), text("MarkVersal@ya.ru"), text("1234567890"));
+//        $(".modal-body").shouldHave(text("PetrovOleg@mail.ru"));
+//        $(".modal-body").shouldHave(text("Male"));
+//        $(".modal-body").shouldHave(text("9168130220"));
+//        $(".modal-body").shouldHave(text("13 March,1980"));
+//        $(".modal-body").shouldHave(text("English"));
+//        $(".modal-body").shouldHave(text("Music"));
+//        $(".modal-body").shouldHave(text("Victory cq 5"));
+//        $(".modal-body").shouldHave(text("Uttar Pradesh Agra"));
+//        $("#closeLargeModal").click();
     }
 }
